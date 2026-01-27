@@ -41,6 +41,10 @@ object BuildJbaEasyJava : BuildType({
         root(DslContext.settingsRoot)
     }
 
+    params {
+        password("password_pipeline", "cksb880c6b5816091d7d8f1a236bea8d7b9pkpS79nlrsXtUm1Jon89CRuLS4WvzNi1zzPCGh7dsFE=")
+    }
+
     steps {
         script {
             name = "Java in CMD"
