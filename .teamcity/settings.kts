@@ -31,6 +31,7 @@ version = "2025.11"
 project {
 
     buildType(BuildJbaEasyJava)
+    pipeline(PipelineJava)
 }
 
 object BuildJbaEasyJava : BuildType({
