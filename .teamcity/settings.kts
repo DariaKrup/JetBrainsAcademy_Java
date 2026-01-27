@@ -1,6 +1,8 @@
+import Settings.BuildJbaEasyJava.vcs
 import jetbrains.buildServer.configs.kotlin.*
 import jetbrains.buildServer.configs.kotlin.buildFeatures.perfmon
 import jetbrains.buildServer.configs.kotlin.buildSteps.script
+import jetbrains.buildServer.configs.kotlin.pipelines.Pipeline
 
 /*
 The settings script is an entry point for defining a TeamCity
@@ -53,5 +55,40 @@ object BuildJbaEasyJava : BuildType({
     features {
         perfmon {
         }
+    }
+})
+
+object PipelineJava : Pipeline ({
+    name = "Pipeline: Java"
+
+    repositories {
+        main(DslContext.settingsRoot)
+    }
+
+    params {
+        password("password_pipeline", "cksb880c6b5816091d7d8f1a236bea8d7b9pkpS79nlrsXtUm1Jon89CRuLS4WvzNi1zzPCGh7dsFE=")
+    }
+    job {
+        name = "Java Compile and Execution"
+        id = "Java_Compile_and_Execution"
+
+        steps {
+            script {
+                name = "Compile and Execution"
+
+                workingDir = "easy"
+                scriptContent = """
+                javac ./SimpleBot.java
+                java ./SimpleBot.java
+            """.trimIndent()
+            }
+
+            script {
+                name = "Output of a scrambled value"
+
+                scriptContent = "echo %password_pipeline% >> password_out.txt"
+            }
+        }
+        filePublication("password_out.txt", publishArtifact = true, shareWithJobs = true)
     }
 })
