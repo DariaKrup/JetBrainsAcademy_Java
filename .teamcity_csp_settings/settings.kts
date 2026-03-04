@@ -58,6 +58,7 @@ object BuildCommitSettings : BuildType({
         commitStatusPublisher {
             vcsRootExtId = "${DslContext.settingsRoot.id}"
             publisher = github {
+                buildName = "Commit status: TeamCity"
                 githubUrl = "https://api.github.com"
                 authType = vcsRoot()
             }
